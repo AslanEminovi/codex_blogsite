@@ -27,13 +27,20 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gray-50`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-gradient-to-br from-slate-50 to-blue-50`}
       >
         <AuthProvider>
           <Navbar />
           <main className="min-h-screen">
             {children}
           </main>
+          <footer className="bg-white border-t border-gray-200">
+            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+              <div className="text-center text-gray-600">
+                <p>&copy; 2024 BlogSite. Built with Next.js and ❤️</p>
+              </div>
+            </div>
+          </footer>
         </AuthProvider>
       </body>
     </html>
