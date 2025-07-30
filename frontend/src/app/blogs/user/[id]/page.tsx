@@ -95,7 +95,7 @@ export default function UserBlogsPage() {
               <span className="text-3xl">📝</span>
             </div>
             <h2 className="text-2xl font-bold text-gray-800 mb-4">No stories yet</h2>
-            <p className="text-gray-600 mb-8 text-lg">This author hasn't shared any stories yet.</p>
+            <p className="text-gray-600 mb-8 text-lg">This author hasn&apos;t shared any stories yet.</p>
             <Link 
               href="/"
               className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 rounded-xl text-lg font-semibold transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
@@ -160,7 +160,7 @@ export default function UserBlogsPage() {
             <div className="absolute bottom-0 right-0 w-40 h-40 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-30"></div>
             <div className="relative text-center">
               <h2 className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-4">
-                Enjoyed {userName}'s stories?
+                Enjoyed {userName}&apos;s stories?
               </h2>
               <p className="text-gray-600 mb-8 text-lg max-w-2xl mx-auto">
                 Discover more amazing content from our community of writers.

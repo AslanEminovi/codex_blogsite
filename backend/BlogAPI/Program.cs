@@ -4,6 +4,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using BlogAPI.Data;
 using BlogAPI.Services;
+using BlogAPI.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -83,6 +84,35 @@ using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<BlogDbContext>();
     context.Database.EnsureCreated();
+    
+    // Seed admin user if not exists
+    await SeedAdminUser(context);
+}
+
+async Task SeedAdminUser(BlogDbContext context)
+{
+    const string adminEmail = "admin@blogsite.com";
+    const string adminPassword = "admin123";
+    const string adminUsername = "Admin";
+
+    // Check if admin user already exists
+    if (!await context.Users.AnyAsync(u => u.Email == adminEmail))
+    {
+        var adminUser = new User
+        {
+            Username = adminUsername,
+            Email = adminEmail,
+            PasswordHash = BCrypt.Net.BCrypt.HashPassword(adminPassword),
+            Role = UserRole.Admin,
+            CreatedAt = DateTime.UtcNow,
+            UpdatedAt = DateTime.UtcNow
+        };
+
+        context.Users.Add(adminUser);
+        await context.SaveChangesAsync();
+        
+        Console.WriteLine($"Admin user created: {adminEmail} / {adminPassword}");
+    }
 }
 
 app.Run();
