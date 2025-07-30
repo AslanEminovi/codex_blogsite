@@ -23,7 +23,7 @@ const api = axios.create({
 api.interceptors.request.use((config) => {
   if (typeof window !== 'undefined') {
     const token = localStorage.getItem('token');
-    if (token) {
+    if (token && config.headers) {
       config.headers.Authorization = `Bearer ${token}`;
     }
   }
@@ -49,12 +49,12 @@ api.interceptors.response.use(
 // Auth API
 export const authAPI = {
   login: async (data: LoginRequest): Promise<AuthResponse> => {
-    const response = await api.post('/auth/login', data);
+    const response = await api.post<AuthResponse>('/auth/login', data);
     return response.data;
   },
 
   register: async (data: RegisterRequest): Promise<AuthResponse> => {
-    const response = await api.post('/auth/register', data);
+    const response = await api.post<AuthResponse>('/auth/register', data);
     return response.data;
   },
 };
@@ -62,32 +62,32 @@ export const authAPI = {
 // Blogs API
 export const blogsAPI = {
   getAll: async (): Promise<Blog[]> => {
-    const response = await api.get('/blogs');
+    const response = await api.get<Blog[]>('/blogs');
     return response.data;
   },
 
   getById: async (id: number): Promise<Blog> => {
-    const response = await api.get(`/blogs/${id}`);
+    const response = await api.get<Blog>(`/blogs/${id}`);
     return response.data;
   },
 
   getByUser: async (userId: number): Promise<Blog[]> => {
-    const response = await api.get(`/blogs/user/${userId}`);
+    const response = await api.get<Blog[]>(`/blogs/user/${userId}`);
     return response.data;
   },
 
   getMy: async (): Promise<Blog[]> => {
-    const response = await api.get('/blogs/my');
+    const response = await api.get<Blog[]>('/blogs/my');
     return response.data;
   },
 
   create: async (data: BlogCreateRequest): Promise<Blog> => {
-    const response = await api.post('/blogs', data);
+    const response = await api.post<Blog>('/blogs', data);
     return response.data;
   },
 
   update: async (id: number, data: BlogUpdateRequest): Promise<Blog> => {
-    const response = await api.put(`/blogs/${id}`, data);
+    const response = await api.put<Blog>(`/blogs/${id}`, data);
     return response.data;
   },
 
@@ -99,12 +99,12 @@ export const blogsAPI = {
 // Admin API
 export const adminAPI = {
   getUsers: async (): Promise<User[]> => {
-    const response = await api.get('/admin/users');
+    const response = await api.get<User[]>('/admin/users');
     return response.data;
   },
 
   getBlogs: async (): Promise<Blog[]> => {
-    const response = await api.get('/admin/blogs');
+    const response = await api.get<Blog[]>('/admin/blogs');
     return response.data;
   },
 
@@ -117,7 +117,7 @@ export const adminAPI = {
   },
 
   getStats: async (): Promise<AdminStats> => {
-    const response = await api.get('/admin/stats');
+    const response = await api.get<AdminStats>('/admin/stats');
     return response.data;
   },
 };

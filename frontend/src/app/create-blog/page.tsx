@@ -34,8 +34,8 @@ export default function CreateBlogPage() {
     try {
       const blog = await blogsAPI.create(data);
       router.push(`/blog/${blog.id}`);
-    } catch (err: any) {
-      setError(err.response?.data || 'Failed to create blog');
+    } catch (err: unknown) {
+      setError((err as { response?: { data?: string } })?.response?.data || 'Failed to create blog');
     } finally {
       setIsLoading(false);
     }

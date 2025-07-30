@@ -54,8 +54,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       localStorage.setItem('user', JSON.stringify(response));
       
       setUser(response);
-    } catch (error: any) {
-      const message = error.response?.data || 'Login failed';
+    } catch (error: unknown) {
+      const message = (error as { response?: { data?: string } })?.response?.data || 'Login failed';
       throw new Error(typeof message === 'string' ? message : 'Login failed');
     }
   };
@@ -69,8 +69,8 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
       localStorage.setItem('user', JSON.stringify(response));
       
       setUser(response);
-    } catch (error: any) {
-      const message = error.response?.data || 'Registration failed';
+    } catch (error: unknown) {
+      const message = (error as { response?: { data?: string } })?.response?.data || 'Registration failed';
       throw new Error(typeof message === 'string' ? message : 'Registration failed');
     }
   };

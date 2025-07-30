@@ -12,7 +12,8 @@ import Link from 'next/link';
 export default function AdminPage() {
   const { user } = useAuth();
   const router = useRouter();
-  const [activeTab, setActiveTab] = useState<'stats' | 'users' | 'blogs'>('stats');
+  type TabType = 'stats' | 'users' | 'blogs';
+  const [activeTab, setActiveTab] = useState<TabType>('stats');
   const [stats, setStats] = useState<AdminStats | null>(null);
   const [users, setUsers] = useState<User[]>([]);
   const [blogs, setBlogs] = useState<Blog[]>([]);
@@ -119,7 +120,7 @@ export default function AdminPage() {
           ].map(({ id, label, icon: Icon }) => (
             <button
               key={id}
-              onClick={() => setActiveTab(id as any)}
+              onClick={() => setActiveTab(id as TabType)}
               className={`py-2 px-1 border-b-2 font-medium text-sm flex items-center space-x-2 ${
                 activeTab === id
                   ? 'border-blue-500 text-blue-600'

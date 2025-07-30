@@ -28,8 +28,8 @@ export default function LoginPage() {
     try {
       await login(data.email, data.password);
       router.push('/dashboard');
-    } catch (err: any) {
-      setError(err.message || 'Login failed');
+    } catch (err: unknown) {
+      setError((err as Error).message || 'Login failed');
     } finally {
       setIsLoading(false);
     }
