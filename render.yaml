@@ -27,5 +27,5 @@ services:
     rootDir: ./frontend
     envVars:
       - key: NEXT_PUBLIC_API_URL
-        value: https://blogsite-api.onrender.com/api
+        value: https://blogsite-api-wzb6.onrender.com/api
 # No external database needed - using SQLite
