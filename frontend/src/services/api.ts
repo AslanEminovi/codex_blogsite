@@ -122,4 +122,25 @@ export const adminAPI = {
   },
 };
 
+// Favorites API
+export const favoritesAPI = {
+  getMyFavorites: async (): Promise<Blog[]> => {
+    const response = await api.get<Blog[]>('/favorites');
+    return response.data;
+  },
+
+  addToFavorites: async (blogId: number): Promise<void> => {
+    await api.post(`/favorites/${blogId}`);
+  },
+
+  removeFromFavorites: async (blogId: number): Promise<void> => {
+    await api.delete(`/favorites/${blogId}`);
+  },
+
+  checkIsFavorited: async (blogId: number): Promise<boolean> => {
+    const response = await api.get<boolean>(`/favorites/check/${blogId}`);
+    return response.data;
+  },
+};
+
 export default api;

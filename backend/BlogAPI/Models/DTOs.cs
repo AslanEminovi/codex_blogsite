@@ -75,6 +75,7 @@ namespace BlogAPI.Models
         public DateTime UpdatedAt { get; set; }
         public int UserId { get; set; }
         public string Username { get; set; } = string.Empty;
+        public bool IsFavorited { get; set; } = false;
     }
 
     public class UserResponse

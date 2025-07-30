@@ -12,6 +12,7 @@ import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { tomorrow } from 'react-syntax-highlighter/dist/esm/styles/prism';
+import FavoriteButton from '@/components/FavoriteButton';
 
 export default function BlogPage() {
   const params = useParams();
@@ -117,12 +118,11 @@ export default function BlogPage() {
               >
                 <Share2 className="h-5 w-5" />
               </button>
-              <button
-                className="p-2 text-gray-600 hover:text-red-600 hover:bg-red-50 rounded-lg transition-all duration-200"
-                title="Like"
-              >
-                <Heart className="h-5 w-5" />
-              </button>
+              <FavoriteButton 
+                blogId={blog.id} 
+                isFavorited={blog.isFavorited} 
+                size="md"
+              />
               
               {(isOwner || isAdmin) && (
                 <div className="flex space-x-2 ml-2 border-l border-gray-300 pl-4">

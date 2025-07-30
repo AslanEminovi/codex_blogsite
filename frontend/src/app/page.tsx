@@ -7,6 +7,7 @@ import { blogsAPI } from '@/services/api';
 import { format } from 'date-fns';
 import { Calendar, User, Eye } from 'lucide-react';
 import { useAuth } from '@/contexts/AuthContext';
+import FavoriteButton from '@/components/FavoriteButton';
 
 export default function Home() {
   const [blogs, setBlogs] = useState<Blog[]>([]);
@@ -142,6 +143,12 @@ export default function Home() {
                         <span>{format(new Date(blog.createdAt), 'MMM d, yyyy')}</span>
                       </div>
                     </div>
+                    
+                    <FavoriteButton 
+                      blogId={blog.id} 
+                      isFavorited={blog.isFavorited} 
+                      size="sm"
+                    />
                   </div>
                   
                   <div className="mt-4">

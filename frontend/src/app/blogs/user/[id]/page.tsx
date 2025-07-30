@@ -7,6 +7,7 @@ import { Blog } from '@/types';
 import { blogsAPI } from '@/services/api';
 import { format } from 'date-fns';
 import { Calendar, User, Eye, ArrowLeft } from 'lucide-react';
+import FavoriteButton from '@/components/FavoriteButton';
 
 export default function UserBlogsPage() {
   const params = useParams();
@@ -129,6 +130,11 @@ export default function UserBlogsPage() {
                     <Calendar className="h-4 w-4" />
                     <span>{format(new Date(blog.createdAt), 'MMM d, yyyy')}</span>
                   </div>
+                  <FavoriteButton 
+                    blogId={blog.id} 
+                    isFavorited={blog.isFavorited} 
+                    size="sm"
+                  />
                 </div>
                 
                 <div className="mt-4">

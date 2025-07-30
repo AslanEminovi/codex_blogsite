@@ -22,6 +22,8 @@ namespace BlogAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<BlogResponse>>> GetBlogs()
         {
+            var userId = GetUserId(); // May be null for anonymous users
+
             var blogs = await _context.Blogs
                 .Include(b => b.User)
                 .OrderByDescending(b => b.CreatedAt)
@@ -34,7 +36,8 @@ namespace BlogAPI.Controllers
                     CreatedAt = b.CreatedAt,
                     UpdatedAt = b.UpdatedAt,
                     UserId = b.UserId,
-                    Username = b.User.Username
+                    Username = b.User.Username,
+                    IsFavorited = userId != null && _context.Favorites.Any(f => f.UserId == userId && f.BlogId == b.Id)
                 })
                 .ToListAsync();
 
@@ -45,6 +48,8 @@ namespace BlogAPI.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<BlogResponse>> GetBlog(int id)
         {
+            var userId = GetUserId(); // May be null for anonymous users
+
             var blog = await _context.Blogs
                 .Include(b => b.User)
                 .Where(b => b.Id == id)
@@ -57,7 +62,8 @@ namespace BlogAPI.Controllers
                     CreatedAt = b.CreatedAt,
                     UpdatedAt = b.UpdatedAt,
                     UserId = b.UserId,
-                    Username = b.User.Username
+                    Username = b.User.Username,
+                    IsFavorited = userId != null && _context.Favorites.Any(f => f.UserId == userId && f.BlogId == b.Id)
                 })
                 .FirstOrDefaultAsync();
 
@@ -73,6 +79,8 @@ namespace BlogAPI.Controllers
         [HttpGet("user/{userId}")]
         public async Task<ActionResult<IEnumerable<BlogResponse>>> GetBlogsByUser(int userId)
         {
+            var currentUserId = GetUserId(); // May be null for anonymous users
+
             var blogs = await _context.Blogs
                 .Include(b => b.User)
                 .Where(b => b.UserId == userId)
@@ -86,7 +94,8 @@ namespace BlogAPI.Controllers
                     CreatedAt = b.CreatedAt,
                     UpdatedAt = b.UpdatedAt,
                     UserId = b.UserId,
-                    Username = b.User.Username
+                    Username = b.User.Username,
+                    IsFavorited = currentUserId != null && _context.Favorites.Any(f => f.UserId == currentUserId && f.BlogId == b.Id)
                 })
                 .ToListAsync();
 
@@ -117,7 +126,8 @@ namespace BlogAPI.Controllers
                     CreatedAt = b.CreatedAt,
                     UpdatedAt = b.UpdatedAt,
                     UserId = b.UserId,
-                    Username = b.User.Username
+                    Username = b.User.Username,
+                    IsFavorited = _context.Favorites.Any(f => f.UserId == userId && f.BlogId == b.Id)
                 })
                 .ToListAsync();
 

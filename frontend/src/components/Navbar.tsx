@@ -41,6 +41,14 @@ const Navbar: React.FC = () => {
                   </Link>
                   
                   <Link 
+                    href="/favorites" 
+                    className="text-gray-700 hover:text-red-600 px-3 py-2 rounded-md text-sm font-medium transition-colors flex items-center space-x-1"
+                  >
+                    <Heart className="h-4 w-4" />
+                    <span>Favorites</span>
+                  </Link>
+                  
+                  <Link 
                     href="/create-blog" 
                     className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center space-x-1 shadow-sm hover:shadow-md transform hover:-translate-y-0.5"
                   >
@@ -106,6 +114,12 @@ const Navbar: React.FC = () => {
                 className="text-gray-700 hover:text-blue-600 block px-3 py-2 text-sm font-medium"
               >
                 My Dashboard
+              </Link>
+              <Link 
+                href="/favorites" 
+                className="text-gray-700 hover:text-red-600 block px-3 py-2 text-sm font-medium"
+              >
+                Favorites
               </Link>
               <Link 
                 href="/create-blog" 

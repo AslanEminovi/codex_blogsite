@@ -11,6 +11,7 @@ namespace BlogAPI.Data
 
         public DbSet<User> Users { get; set; }
         public DbSet<Blog> Blogs { get; set; }
+        public DbSet<Favorite> Favorites { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -40,7 +41,27 @@ namespace BlogAPI.Data
                 entity.HasIndex(e => e.CreatedAt);
             });
 
-                    // Note: Admin user and sample blogs will be created via API when app first runs
+            // Configure Favorite entity
+            modelBuilder.Entity<Favorite>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                
+                entity.HasOne(f => f.User)
+                    .WithMany()
+                    .HasForeignKey(f => f.UserId)
+                    .OnDelete(DeleteBehavior.Cascade);
+                
+                entity.HasOne(f => f.Blog)
+                    .WithMany()
+                    .HasForeignKey(f => f.BlogId)
+                    .OnDelete(DeleteBehavior.Cascade);
+                
+                // Ensure one user can only favorite a blog once
+                entity.HasIndex(e => new { e.UserId, e.BlogId }).IsUnique();
+                entity.HasIndex(e => e.CreatedAt);
+            });
+
+            // Note: Admin user and sample blogs will be created via API when app first runs
         }
     }
 }

@@ -16,6 +16,7 @@ export interface Blog {
   updatedAt: string;
   userId: number;
   username: string;
+  isFavorited?: boolean;
 }
 
 export interface AuthResponse {
