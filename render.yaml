@@ -1,0 +1,39 @@
+services:
+  # Backend API Service
+  - type: web
+    name: blogsite-api
+    runtime: docker
+    dockerfilePath: ./backend/BlogAPI/Dockerfile
+    dockerContext: ./backend/BlogAPI
+    envVars:
+      - key: ASPNETCORE_ENVIRONMENT
+        value: Production
+      - key: ASPNETCORE_URLS
+        value: http://+:10000
+      - key: ConnectionStrings__DefaultConnection
+        fromDatabase:
+          name: blogsite-db
+          property: connectionString
+      - key: Jwt__Key
+        generateValue: true
+      - key: Jwt__Issuer
+        value: BlogAPI-Render
+      - key: Jwt__Audience
+        value: BlogAPI-Render
+
+  # Frontend Web Service
+  - type: web
+    name: blogsite-frontend
+    runtime: node
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    rootDir: ./frontend
+    envVars:
+      - key: NEXT_PUBLIC_API_URL
+        value: https://blogsite-api.onrender.com/api
+
+# Database
+databases:
+  - name: blogsite-db
+    databaseName: blogsite
+    user: blogsite
