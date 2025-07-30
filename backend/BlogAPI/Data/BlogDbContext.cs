@@ -40,24 +40,7 @@ namespace BlogAPI.Data
                 entity.HasIndex(e => e.CreatedAt);
             });
 
-            // Seed admin user
-            var adminUserId = 1;
-            modelBuilder.Entity<User>().HasData(
-                new User
-                {
-                    Id = adminUserId,
-                    Username = "Aslan Eminovi",
-                    Email = "admin@blogsite.com",
-                    PasswordHash = BCrypt.Net.BCrypt.HashPassword("admin123"),
-                    Role = UserRole.Admin,
-                    CreatedAt = new DateTime(2025, 1, 1), // Updated to 2025
-                    UpdatedAt = new DateTime(2025, 1, 1)
-                }
-            );
-
-            // Seed sample blogs
-            var sampleBlogs = SampleBlogs.GetSampleBlogs(adminUserId);
-            modelBuilder.Entity<Blog>().HasData(sampleBlogs);
+                    // Note: Admin user and sample blogs will be created via API when app first runs
         }
     }
 }
