@@ -4,7 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import { useAuth } from '@/contexts/AuthContext';
 import { UserRole } from '@/types';
-import { LogOut, User, BookOpen, Settings, PlusCircle } from 'lucide-react';
+import { LogOut, User, BookOpen, Settings, PlusCircle, Heart } from 'lucide-react';
 
 const Navbar: React.FC = () => {
   const { user, logout } = useAuth();

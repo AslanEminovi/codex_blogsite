@@ -7,7 +7,7 @@ import { Blog } from '@/types';
 import { blogsAPI } from '@/services/api';
 import { useAuth } from '@/contexts/AuthContext';
 import { format } from 'date-fns';
-import { Calendar, User, ArrowLeft, Edit, Trash2, Share2, Heart } from 'lucide-react';
+import { Calendar, User, ArrowLeft, Edit, Trash2, Share2 } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
 import remarkGfm from 'remark-gfm';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
