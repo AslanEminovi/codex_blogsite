@@ -50,8 +50,8 @@ namespace BlogAPI.Data
                     Email = "admin@blogsite.com",
                     PasswordHash = BCrypt.Net.BCrypt.HashPassword("admin123"),
                     Role = UserRole.Admin,
-                    CreatedAt = DateTime.UtcNow,
-                    UpdatedAt = DateTime.UtcNow
+                    CreatedAt = new DateTime(2024, 1, 1), // Fixed date for seeding
+                    UpdatedAt = new DateTime(2024, 1, 1)
                 }
             );
         }

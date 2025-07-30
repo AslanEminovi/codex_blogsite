@@ -12,10 +12,9 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-// Add DbContext
-var connectionString = builder.Configuration["DATABASE_URL"] ?? builder.Configuration.GetConnectionString("DefaultConnection");
+// Add DbContext (SQLite - no external database needed!)
 builder.Services.AddDbContext<BlogDbContext>(options =>
-    options.UseNpgsql(connectionString));
+    options.UseSqlite("Data Source=blogsite.db"));
 
 // Add JWT Authentication
 var jwtKey = builder.Configuration["Jwt:Key"] ?? "your-super-secret-jwt-key-that-is-at-least-32-characters-long";

@@ -10,10 +10,7 @@ services:
         value: Production
       - key: ASPNETCORE_URLS
         value: http://+:10000
-      - key: DATABASE_URL
-        fromDatabase:
-          name: blogsite-db
-          property: connectionString
+# No database URL needed - using SQLite file database
       - key: Jwt__Key
         generateValue: true
       - key: Jwt__Issuer
@@ -32,8 +29,4 @@ services:
       - key: NEXT_PUBLIC_API_URL
         value: https://blogsite-api.onrender.com/api
 
-# Database
-databases:
-  - name: blogsite-db
-    databaseName: blogsite
-    user: blogsite
+# No external database needed - using SQLite
