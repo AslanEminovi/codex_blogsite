@@ -46,14 +46,18 @@ namespace BlogAPI.Data
                 new User
                 {
                     Id = adminUserId,
-                    Username = "admin",
+                    Username = "Aslan Eminovi",
                     Email = "admin@blogsite.com",
                     PasswordHash = BCrypt.Net.BCrypt.HashPassword("admin123"),
                     Role = UserRole.Admin,
-                    CreatedAt = new DateTime(2024, 1, 1), // Fixed date for seeding
-                    UpdatedAt = new DateTime(2024, 1, 1)
+                    CreatedAt = new DateTime(2025, 1, 1), // Updated to 2025
+                    UpdatedAt = new DateTime(2025, 1, 1)
                 }
             );
+
+            // Seed sample blogs
+            var sampleBlogs = SampleBlogs.GetSampleBlogs(adminUserId);
+            modelBuilder.Entity<Blog>().HasData(sampleBlogs);
         }
     }
 }

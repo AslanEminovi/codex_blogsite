@@ -1,0 +1,108 @@
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
+
+#nullable disable
+
+#pragma warning disable CA1814 // Prefer jagged arrays over multidimensional
+
+namespace BlogAPI.Migrations
+{
+    /// <inheritdoc />
+    public partial class AddSampleBlogs : Migration
+    {
+        /// <inheritdoc />
+        protected override void Up(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.CreateTable(
+                name: "Users",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Username = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
+                    Email = table.Column<string>(type: "TEXT", maxLength: 255, nullable: false),
+                    PasswordHash = table.Column<string>(type: "TEXT", nullable: false),
+                    Role = table.Column<int>(type: "INTEGER", nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Users", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Blogs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Title = table.Column<string>(type: "TEXT", maxLength: 200, nullable: false),
+                    Content = table.Column<string>(type: "TEXT", nullable: false),
+                    Summary = table.Column<string>(type: "TEXT", maxLength: 500, nullable: false),
+                    CreatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    UpdatedAt = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    UserId = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Blogs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Blogs_Users_UserId",
+                        column: x => x.UserId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.InsertData(
+                table: "Users",
+                columns: new[] { "Id", "CreatedAt", "Email", "PasswordHash", "Role", "UpdatedAt", "Username" },
+                values: new object[] { 1, new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "admin@blogsite.com", "$2a$11$D8n4r1ZrzVNvD/wybZcqreEJjM5A4XpccZaxGF261Fpxwx1vcR/i2", 1, new DateTime(2025, 1, 1, 0, 0, 0, 0, DateTimeKind.Unspecified), "Aslan Eminovi" });
+
+            migrationBuilder.InsertData(
+                table: "Blogs",
+                columns: new[] { "Id", "Content", "CreatedAt", "Summary", "Title", "UpdatedAt", "UserId" },
+                values: new object[,]
+                {
+                    { 1, "# The Future of Web Development in 2025\n\nWeb development continues to evolve at a rapid pace, and 2025 promises to bring exciting new technologies and paradigms that will reshape how we build applications.\n\n## Key Trends to Watch\n\n### 1. **AI-Powered Development**\nArtificial Intelligence is becoming an integral part of the development process:\n- **Code Generation**: Tools like GitHub Copilot and ChatGPT are revolutionizing how we write code\n- **Automated Testing**: AI can generate comprehensive test suites automatically\n- **Bug Detection**: Smart tools that can predict and prevent bugs before they happen\n\n### 2. **WebAssembly (WASM) Goes Mainstream**\n```javascript\n// WebAssembly integration example\nimport init, { process_data } from './pkg/wasm_module.js';\n\nasync function runWasm() {\n    await init();\n    const result = process_data(largeDataSet);\n    return result;\n}\n```\n\n### 3. **Edge Computing Revolution**\nEdge computing is bringing computation closer to users:\n- **Faster Response Times**: Sub-50ms response times globally\n- **Better User Experience**: Reduced latency for interactive applications\n- **Cost Efficiency**: Lower bandwidth costs and improved performance\n\n## The Rise of New Frameworks\n\n### Server Components\nReact Server Components and similar technologies are changing how we think about rendering:\n\n> \"The future of web apps is a hybrid of server and client rendering, giving us the best of both worlds.\"\n\n### TypeScript Everywhere\nTypeScript adoption has reached new heights:\n- **Better Developer Experience**: Enhanced autocomplete and error detection\n- **Safer Refactoring**: Confident code changes with compile-time checks\n- **Team Collaboration**: Clearer interfaces and contracts\n\n## Looking Ahead\n\nThe web platform continues to mature, and developers have more powerful tools than ever before. The key is to:\n\n1. **Stay Curious**: Keep learning and experimenting with new technologies\n2. **Focus on Fundamentals**: Strong basics never go out of style\n3. **User-Centric Approach**: Always prioritize user experience\n\n![Modern Web Development](https://images.unsplash.com/photo-1461749280684-dccba630e2f6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80)\n\nThe future is bright for web developers, and 2025 will be an exciting year full of innovation and growth! 🚀", new DateTime(2025, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), "Exploring the latest trends, technologies, and paradigms that will shape web development in 2025 and beyond.", "The Future of Web Development in 2025", new DateTime(2025, 1, 15, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 },
+                    { 2, "# Building Scalable Applications with Microservices\n\nMicroservices architecture has become the gold standard for building scalable, maintainable applications. Let's explore how to implement this pattern effectively.\n\n## What Are Microservices?\n\nMicroservices are a software development technique—a variant of the service-oriented architecture (SOA) architectural style that structures an application as a collection of loosely coupled services.\n\n### Key Characteristics:\n- **Single Responsibility**: Each service has one business capability\n- **Decentralized**: Services manage their own data and business logic\n- **Technology Agnostic**: Different services can use different technologies\n- **Fault Tolerant**: Failure in one service doesn't bring down the entire system\n\n## Architecture Patterns\n\n### 1. API Gateway Pattern\n```yaml\n# docker-compose.yml example\nversion: '3.8'\nservices:\n  api-gateway:\n    image: nginx:alpine\n    ports:\n      - \"80:80\"\n    volumes:\n      - ./nginx.conf:/etc/nginx/nginx.conf\n  \n  user-service:\n    build: ./user-service\n    environment:\n      - DATABASE_URL=postgres://user:pass@db:5432/users\n  \n  order-service:\n    build: ./order-service\n    environment:\n      - DATABASE_URL=postgres://user:pass@db:5432/orders\n```\n\n### 2. Event-Driven Communication\nServices communicate through events rather than direct API calls:\n\n```csharp\n// Event publishing example\npublic class OrderService\n{\n    private readonly IEventBus _eventBus;\n\n    public async Task CreateOrder(CreateOrderRequest request)\n    {\n        var order = new Order(request);\n        await _repository.SaveAsync(order);\n\n        // Publish event\n        await _eventBus.PublishAsync(new OrderCreatedEvent\n        {\n            OrderId = order.Id,\n            UserId = order.UserId,\n            Items = order.Items\n        });\n    }\n}\n```\n\n## Benefits vs Challenges\n\n### Benefits ✅\n- **Scalability**: Scale individual services based on demand\n- **Technology Diversity**: Use the right tool for each job\n- **Team Autonomy**: Teams can work independently\n- **Resilience**: Better fault isolation\n\n### Challenges ⚠️\n- **Complexity**: Distributed systems are inherently complex\n- **Network Latency**: Inter-service communication overhead\n- **Data Consistency**: Managing distributed transactions\n- **Monitoring**: Need sophisticated observability tools\n\n## Best Practices\n\n### 1. Start Small\n> \"Don't build a microservices architecture from day one. Start with a monolith and extract services as you identify clear boundaries.\"\n\n### 2. Database Per Service\nEach microservice should have its own database to ensure loose coupling:\n\n- **User Service** → User Database\n- **Order Service** → Order Database\n- **Inventory Service** → Inventory Database\n\n### 3. Implement Circuit Breakers\n```csharp\npublic class CircuitBreakerService\n{\n    private readonly CircuitBreaker _circuitBreaker;\n\n    public async Task<T> ExecuteAsync<T>(Func<Task<T>> operation)\n    {\n        return await _circuitBreaker.ExecuteAsync(operation);\n    }\n}\n```\n\n## Monitoring and Observability\n\nEssential tools for microservices:\n- **Distributed Tracing**: Jaeger, Zipkin\n- **Metrics**: Prometheus, Grafana\n- **Logging**: ELK Stack, Fluentd\n- **Health Checks**: Custom endpoints for service health\n\n## Conclusion\n\nMicroservices aren't a silver bullet, but when implemented correctly, they can provide significant benefits for large, complex applications. The key is to understand your requirements and gradually evolve your architecture.\n\nRemember: **Start simple, evolve gradually, and always measure the impact of your architectural decisions.**", new DateTime(2025, 1, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), "A comprehensive guide to designing and implementing microservices architecture for modern applications.", "Building Scalable Applications with Microservices", new DateTime(2025, 1, 20, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 },
+                    { 3, "# Mastering React Performance Optimization\n\nReact is fast by default, but as applications grow, performance can become a concern. Let's explore advanced optimization techniques.\n\n## Understanding React's Rendering\n\n### The Virtual DOM\nReact uses a virtual representation of the DOM to efficiently update the UI:\n\n```jsx\n// React creates a virtual DOM tree\nconst element = (\n  <div className=\"container\">\n    <h1>Hello, {name}!</h1>\n    <p>Welcome to our app</p>\n  </div>\n);\n```\n\n### Reconciliation Process\n1. **Diffing**: Compare current and previous virtual DOM trees\n2. **Update**: Apply only the necessary changes to the real DOM\n3. **Commit**: Flush changes to the browser\n\n## Key Optimization Techniques\n\n### 1. Memoization with React.memo\n```jsx\nconst ExpensiveComponent = React.memo(({ data, onClick }) => {\n  const processedData = useMemo(() => {\n    return data.map(item => ({\n      ...item,\n      processed: expensiveCalculation(item)\n    }));\n  }, [data]);\n\n  return (\n    <div>\n      {processedData.map(item => (\n        <div key={item.id} onClick={() => onClick(item)}>\n          {item.processed}\n        </div>\n      ))}\n    </div>\n  );\n});\n```\n\n### 2. useCallback for Function References\n```jsx\nconst ParentComponent = () => {\n  const [count, setCount] = useState(0);\n  const [items, setItems] = useState([]);\n\n  // Without useCallback, this creates a new function on every render\n  const handleItemClick = useCallback((itemId) => {\n    console.log('Item clicked:', itemId);\n  }, []); // Empty dependency array since it doesn't depend on any values\n\n  const handleAddItem = useCallback(() => {\n    setItems(prev => [...prev, { id: Date.now(), name: `Item ${prev.length}` }]);\n  }, []);\n\n  return (\n    <div>\n      <button onClick={() => setCount(count + 1)}>Count: {count}</button>\n      <button onClick={handleAddItem}>Add Item</button>\n      <ItemList items={items} onItemClick={handleItemClick} />\n    </div>\n  );\n};\n```\n\n## Performance Monitoring\n\n### React DevTools Profiler\nUse the Profiler to identify performance bottlenecks:\n\n1. **Record** a user interaction\n2. **Analyze** which components re-rendered\n3. **Identify** unnecessary renders\n4. **Optimize** using the techniques above\n\n## Conclusion\n\nPerformance optimization is an ongoing process. Start by measuring, identify bottlenecks, apply optimizations, and measure again. \n\n> \"Premature optimization is the root of all evil, but timely optimization is the key to great user experience.\"\n\nRemember: **Performance is a feature, not an afterthought!** 🚀", new DateTime(2025, 1, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), "Learn advanced techniques to optimize React applications for better performance and user experience.", "Mastering React Performance Optimization", new DateTime(2025, 1, 25, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 },
+                    { 4, "# DevOps Best Practices for Modern Applications\n\nDevOps has transformed how we build, deploy, and maintain software. Let's explore the essential practices that every modern development team should implement.\n\n## The DevOps Philosophy\n\nDevOps is more than just tools—it's a cultural shift that emphasizes:\n- **Collaboration** between development and operations teams\n- **Automation** of repetitive tasks\n- **Continuous Integration** and deployment\n- **Monitoring** and feedback loops\n\n### Core Principles\n1. **People over Process over Tools**\n2. **Continuous Improvement**\n3. **Fail Fast, Learn Faster**\n4. **Everything as Code**\n\n## CI/CD Pipeline Essentials\n\n### Continuous Integration\n```yaml\n# GitHub Actions example\nname: CI Pipeline\non:\n  push:\n    branches: [ main, develop ]\n  pull_request:\n    branches: [ main ]\n\njobs:\n  test:\n    runs-on: ubuntu-latest\n    steps:\n    - uses: actions/checkout@v3\n    \n    - name: Setup Node.js\n      uses: actions/setup-node@v3\n      with:\n        node-version: '18'\n        cache: 'npm'\n    \n    - name: Install dependencies\n      run: npm ci\n    \n    - name: Run tests\n      run: npm test\n    \n    - name: Run linting\n      run: npm run lint\n    \n    - name: Build application\n      run: npm run build\n```\n\n## Infrastructure as Code (IaC)\n\n### Terraform Example\n```hcl\n# main.tf\nprovider \"azurerm\" {\n  features {}\n}\n\nresource \"azurerm_resource_group\" \"main\" {\n  name     = \"rg-${var.project_name}-${var.environment}\"\n  location = var.location\n}\n```\n\n## Conclusion\n\nDevOps is a journey, not a destination. Start with:\n\n1. **Automate** your build and deployment process\n2. **Monitor** everything that matters\n3. **Collaborate** across teams\n4. **Iterate** and improve continuously\n\nRemember: **Good DevOps practices lead to faster delivery, higher quality, and happier teams!** 🚀✨", new DateTime(2025, 1, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), "Essential DevOps practices, tools, and strategies for building, deploying, and maintaining modern applications.", "DevOps Best Practices for Modern Applications", new DateTime(2025, 1, 28, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 },
+                    { 5, "# The Art of Clean Code: Writing Maintainable Software\n\nWriting code is easy. Writing **clean** code that stands the test of time is an art form. Let's explore the principles that separate good developers from great ones.\n\n## What is Clean Code?\n\nClean code is code that is easy to read, understand, and modify. It's code that:\n- **Expresses intent clearly**\n- **Has minimal dependencies**\n- **Is well-tested**\n- **Follows consistent conventions**\n\n> \"Any fool can write code that a computer can understand. Good programmers write code that humans can understand.\" - Martin Fowler\n\n## Core Principles\n\n### 1. Meaningful Names\nNames should reveal intent and be pronounceable and searchable.\n\n#### ❌ Bad Example:\n```javascript\n// What do these variables represent?\nconst d = new Date();\nconst u = users.filter(x => x.a > 21);\nconst calc = (p, r, t) => p * r * t;\n```\n\n#### ✅ Good Example:\n```javascript\n// Clear, descriptive names\nconst currentDate = new Date();\nconst adultUsers = users.filter(user => user.age > 21);\nconst calculateInterest = (principal, rate, time) => principal * rate * time;\n```\n\n### 2. Functions Should Do One Thing\nFunctions should be small and have a single responsibility.\n\n## SOLID Principles\n\n### S - Single Responsibility Principle\nA class should have only one reason to change.\n\n```csharp\n// ❌ Bad: Multiple responsibilities\npublic class User\n{\n    public string Name { get; set; }\n    public string Email { get; set; }\n    \n    public void Save() { /* Database logic */ }\n    public void SendEmail() { /* Email logic */ }\n    public string GenerateReport() { /* Reporting logic */ }\n}\n\n// ✅ Good: Single responsibility\npublic class User\n{\n    public string Name { get; set; }\n    public string Email { get; set; }\n}\n\npublic class UserRepository\n{\n    public void Save(User user) { /* Database logic */ }\n}\n```\n\n## Conclusion\n\nClean code is not about following rules blindly—it's about crafting software that:\n- **Survives** the test of time\n- **Adapts** to changing requirements  \n- **Welcomes** new team members\n- **Reduces** maintenance costs\n\n### Key Takeaways\n1. **Write code for humans**, not just computers\n2. **Refactor continuously**—don't let technical debt accumulate\n3. **Test everything**—clean code is testable code\n4. **Be consistent**—establish and follow team conventions\n5. **Keep learning**—clean code practices evolve with experience\n\n> \"The only way to write clean code is to care about the code you write.\"\n\nRemember: **Clean code is not written once—it's maintained every day!** 🧹✨", new DateTime(2025, 1, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), "Discover the principles, practices, and patterns that make code clean, readable, and maintainable for long-term success.", "The Art of Clean Code: Writing Maintainable Software", new DateTime(2025, 1, 30, 0, 0, 0, 0, DateTimeKind.Unspecified), 1 }
+                });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Blogs_CreatedAt",
+                table: "Blogs",
+                column: "CreatedAt");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Blogs_UserId",
+                table: "Blogs",
+                column: "UserId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Email",
+                table: "Users",
+                column: "Email",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_Username",
+                table: "Users",
+                column: "Username",
+                unique: true);
+        }
+
+        /// <inheritdoc />
+        protected override void Down(MigrationBuilder migrationBuilder)
+        {
+            migrationBuilder.DropTable(
+                name: "Blogs");
+
+            migrationBuilder.DropTable(
+                name: "Users");
+        }
+    }
+}
